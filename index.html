@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Letter for My Sister</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap');
+
+    :root {
+      --ink: #24343a;
+      --deep: #2f5a58;
+      --rose: #c96f73;
+      --cream: #faf6eb;
+      --gold: #d8b36a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Nunito", sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.75) 0 2px, transparent 3px),
+        linear-gradient(135deg, #dbe8df, #f7edd8 55%, #ead3cd);
+      background-size: 28px 28px, cover;
+      display: grid;
+      place-items: center;
+      padding: 48px 18px;
+      overflow-x: hidden;
+    }
+
+    .page {
+      position: relative;
+      width: min(960px, 100%);
+      min-height: 620px;
+      background: var(--cream);
+      border: 1px solid rgba(47,90,88,.12);
+      border-radius: 24px;
+      box-shadow: 0 24px 70px rgba(55,70,65,.22);
+      display: grid;
+      grid-template-columns: 38% 62%;
+      overflow: hidden;
+    }
+
+    .art-panel {
+      position: relative;
+      min-height: 620px;
+      background: linear-gradient(160deg, #86aaa0 0%, #bad0c5 65%, #f2d9ca 100%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .art-panel::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 18px;
+    }
+
+    .portrait {
+      position: relative;
+      width: 92%;
+      height: 78%;
+      object-fit: contain;
+      object-position: bottom center;
+      filter: drop-shadow(0 16px 18px rgba(36,52,58,.22));
+      z-index: 2;
+    }
+
+    .portrait-loid {
+      position: absolute;
+      z-index: 3;
+      right: -3%;
+      bottom: 18px;
+      width: 58%;
+      height: 68%;
+      object-fit: contain;
+      object-position: bottom right;
+      filter: drop-shadow(0 14px 16px rgba(36,52,58,.22));
+    }
+
+    .portrait-anya {
+      position: absolute;
+      z-index: 4;
+      left: -5%;
+      bottom: 18px;
+      width: 66%;
+      height: 71%;
+      object-fit: contain;
+      object-position: bottom left;
+      filter: drop-shadow(0 14px 16px rgba(36,52,58,.22));
+    }
+
+    .portrait-fallback {
+      position: absolute;
+      z-index: 1;
+      bottom: 60px;
+      width: 210px;
+      height: 210px;
+      border: 12px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: rgba(255,255,255,.9);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 72px;
+      background: rgba(47,90,88,.16);
+    }
+
+    .tag {
+      position: absolute;
+      z-index: 4;
+      left: 28px;
+      bottom: 28px;
+      background: rgba(250,246,235,.92);
+      border-radius: 999px;
+      padding: 9px 14px;
+      color: var(--deep);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 22px rgba(47,90,88,.12);
+    }
+
+    .letter {
+      position: relative;
+      padding: 72px 70px 54px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .letter::after {
+      content: "";
+      position: absolute;
+      right: 30px;
+      bottom: 24px;
+      width: 76px;
+      height: 76px;
+      opacity: .12;
+      border: 1px solid var(--rose);
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 8px var(--cream), inset 0 0 0 9px var(--rose);
+    }
+
+    .eyebrow {
+      color: var(--rose);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      color: var(--deep);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(44px, 6vw, 70px);
+      line-height: .92;
+      letter-spacing: -.03em;
+    }
+
+    .divider {
+      width: 62px;
+      height: 3px;
+      margin: 5px 0 22px;
+      background: var(--gold);
+      border-radius: 20px;
+    }
+
+    .message {
+      max-width: 510px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(19px, 2.2vw, 23px);
+      line-height: 1.55;
+    }
+
+    .message p { margin: 0 0 14px; }
+
+    .signoff {
+      margin-top: 14px;
+      color: var(--deep);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 27px;
+      font-weight: 700;
+    }
+
+    .heart {
+      color: var(--rose);
+      display: inline-block;
+      transform: rotate(-8deg);
+    }
+
+    .flowers {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 150px;
+      height: 150px;
+      opacity: .3;
+      pointer-events: none;
+    }
+
+    .flower {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border: 2px solid var(--rose);
+      border-radius: 50%;
+    }
+    .flower:nth-child(1) { left: 20px; top: 25px; }
+    .flower:nth-child(2) { left: 46px; top: 45px; }
+    .flower:nth-child(3) { left: 78px; top: 18px; }
+    .flower:nth-child(4) { left: 105px; top: 52px; }
+    .flower:nth-child(5) { left: 66px; top: 74px; }
+
+    @media (max-width: 760px) {
+      body { padding: 18px 12px; }
+      .page {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+      }
+      .art-panel { min-height: 330px; }
+      .portrait { height: 300px; width: 270px; }
+      .portrait-loid { right: 8%; bottom: 15px; width: 55%; height: 270px; }
+      .portrait-anya { left: 6%; bottom: 15px; width: 60%; height: 280px; }
+      .portrait-fallback { bottom: 30px; }
+      .tag { left: 24px; bottom: 24px; }
+      .letter { padding: 44px 28px 48px; }
+      .flowers { display: none; }
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page { width: 100%; min-height: 100vh; box-shadow: none; border: 0; border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="art-panel" aria-label="Anya and Loid Forger illustration">
+      <div class="portrait-fallback" aria-hidden="true">A</div>
+      <img
+        class="portrait-loid"
+        id="loidPortrait"
+        src="https://cdn.myanimelist.net/images/characters/9/468820.jpg"
+        alt="Loid Forger"
+      />
+      <img
+        class="portrait-anya"
+        id="anyaPortrait"
+        src="https://cdn.myanimelist.net/images/characters/12/463254.jpg"
+        alt="Anya Forger"
+      />
+      <div class="tag">Anya &amp; Loid</div>
+    </section>
+
+    <section class="letter">
+      <div class="flowers" aria-hidden="true">
+        <i class="flower"></i><i class="flower"></i><i class="flower"></i>
+        <i class="flower"></i><i class="flower"></i>
+      </div>
+
+      <div class="eyebrow">A heartfelt farewell</div>
+      <h1>Dear Sister,</h1>
+      <div class="divider"></div>
+
+      <div class="message">
+        <p>I am truly sorry for the pain I have caused you. You are one of the most precious people in my life, and I wish I had understood sooner.</p>
+        <p>Goodbye does not mean I stop caring. Even when our paths separate, I will carry every memory of us, and I will always wish you happiness, peace, and a beautiful life.</p>
+      </div>
+
+      <div class="signoff">
+        With love, always <span class="heart">♥</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    async function loadCharacter(name, imageId) {
+      try {
+        const response = await fetch(
+          "https://api.jikan.moe/v4/characters?q=" + encodeURIComponent(name) + "&limit=1"
+        );
+        if (!response.ok) return;
+        const data = await response.json();
+        const image = data?.data?.[0]?.images?.jpg?.image_url;
+        if (image) document.getElementById(imageId).src = image;
+      } catch (_) {
+        // The fallback keeps the page complete if the character API is unavailable.
+      }
+    }
+
+    document.getElementById("anyaPortrait").addEventListener("error", function () {
+      this.style.display = "none";
+    });
+    document.getElementById("loidPortrait").addEventListener("error", function () {
+      this.style.display = "none";
+    });
+
+    loadCharacter("Anya Forger", "anyaPortrait");
+    loadCharacter("Loid Forger", "loidPortrait");
+  </script>
+</body>
+</html>
