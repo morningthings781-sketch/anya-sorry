@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Letter for My Sister</title>
+  <title>A Letter for Ammi</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap');
 
@@ -47,11 +47,18 @@
 
     .art-panel {
       position: relative;
-      min-height: 620px;
+      min-height: 760px;
       background: linear-gradient(160deg, #86aaa0 0%, #bad0c5 65%, #f2d9ca 100%);
+      background-size: 160% 160%;
+      animation: art-wash 14s ease-in-out infinite alternate;
       display: flex;
       align-items: flex-end;
       justify-content: center;
+    }
+
+    @keyframes art-wash {
+      from { background-position: 0% 50%; }
+      to { background-position: 100% 50%; }
     }
 
     .art-panel::before {
@@ -62,14 +69,38 @@
       border-radius: 18px;
     }
 
-    .portrait {
-      position: relative;
-      width: 92%;
-      height: 78%;
-      object-fit: contain;
-      object-position: bottom center;
-      filter: drop-shadow(0 16px 18px rgba(36,52,58,.22));
+    .portrait-gallery {
+      position: absolute;
+      inset: 58px 12px 58px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: center;
+      gap: 8px;
       z-index: 2;
+    }
+
+    .portrait {
+      width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      filter: drop-shadow(0 16px 18px rgba(36,52,58,.22));
+      animation: portrait-arrive .8s ease-out both;
+      transition: transform .35s ease, filter .35s ease;
+    }
+
+    .portrait:nth-child(2) { animation-delay: .18s; }
+
+    @keyframes portrait-arrive {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (hover: hover) {
+      .portrait:hover {
+        transform: translateY(-8px) scale(1.025);
+        filter: drop-shadow(0 20px 24px rgba(36,52,58,.32));
+      }
     }
 
     .portrait-loid {
@@ -115,8 +146,9 @@
     .tag {
       position: absolute;
       z-index: 4;
-      left: 28px;
-      bottom: 28px;
+      left: 50%;
+      top: 28px;
+      transform: translateX(-50%);
       background: rgba(250,246,235,.92);
       border-radius: 999px;
       padding: 9px 14px;
@@ -128,12 +160,68 @@
       box-shadow: 0 8px 22px rgba(47,90,88,.12);
     }
 
+    .love-note {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      width: max-content;
+      color: var(--deep);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(20px, 2vw, 28px);
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(36,52,58,.55);
+    }
+
     .letter {
       position: relative;
       padding: 72px 70px 54px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      animation: letter-arrive .75s .12s ease-out both;
+    }
+
+    @keyframes letter-arrive {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .floating-hearts {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -28px;
+      color: var(--rose);
+      font-size: 22px;
+      opacity: 0;
+      animation: float-heart 11s linear infinite;
+    }
+
+    .floating-heart:nth-child(1) { left: 12%; animation-delay: -2s; }
+    .floating-heart:nth-child(2) { left: 34%; font-size: 16px; animation-delay: -7s; animation-duration: 13s; }
+    .floating-heart:nth-child(3) { left: 57%; animation-delay: -5s; animation-duration: 12s; }
+    .floating-heart:nth-child(4) { left: 78%; font-size: 18px; animation-delay: -9s; animation-duration: 14s; }
+    .floating-heart:nth-child(5) { left: 91%; animation-delay: -1s; animation-duration: 10s; }
+
+    @keyframes float-heart {
+      0% { bottom: -28px; opacity: 0; transform: translateX(0) scale(.75); }
+      12% { opacity: .48; }
+      50% { transform: translateX(14px) scale(1); }
+      88% { opacity: .35; }
+      100% { bottom: 100%; opacity: 0; transform: translateX(-8px) scale(.85); }
+    }
+
+    .letter > :not(.floating-hearts):not(.flowers) {
+      position: relative;
+      z-index: 1;
     }
 
     .letter::after {
@@ -184,6 +272,11 @@
 
     .message p { margin: 0 0 14px; }
 
+    .message .letter-line {
+      margin: 0;
+      line-height: 1.28;
+    }
+
     .signoff {
       margin-top: 14px;
       color: var(--deep);
@@ -227,14 +320,21 @@
         grid-template-columns: 1fr;
         max-width: 520px;
       }
-      .art-panel { min-height: 330px; }
-      .portrait { height: 300px; width: 270px; }
+      .art-panel { min-height: 760px; }
+      .portrait-gallery { inset: 54px 18px 58px; }
       .portrait-loid { right: 8%; bottom: 15px; width: 55%; height: 270px; }
       .portrait-anya { left: 6%; bottom: 15px; width: 60%; height: 280px; }
       .portrait-fallback { bottom: 30px; }
-      .tag { left: 24px; bottom: 24px; }
+      .tag { top: 24px; }
+      .love-note { bottom: 10px; font-size: 24px; }
       .letter { padding: 44px 28px 48px; }
       .flowers { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .floating-heart { display: none; }
+      .art-panel, .portrait, .letter { animation: none; }
+      .portrait { transition: none; }
     }
 
     @media print {
@@ -245,36 +345,62 @@
 </head>
 <body>
   <main class="page">
-    <section class="art-panel" aria-label="Anya and Loid Forger illustration">
-      <div class="portrait-fallback" aria-hidden="true">A</div>
-      <img
-        class="portrait-loid"
-        id="loidPortrait"
-        src="https://cdn.myanimelist.net/images/characters/9/468820.jpg"
-        alt="Loid Forger"
-      />
-      <img
-        class="portrait-anya"
-        id="anyaPortrait"
-        src="https://cdn.myanimelist.net/images/characters/12/463254.jpg"
-        alt="Anya Forger"
-      />
+    <section class="art-panel" aria-label="Spy x Family illustrations">
+      <div class="portrait-gallery">
+        <img
+          class="portrait"
+          src="download.jpg"
+          alt="Loid holding Anya and Yor"
+        />
+        <img
+          class="portrait"
+          src="4aacb58c43ebe59891ddcd69c6c4abf2.jpg"
+          alt="Loid, Yor, and Anya together at sunset"
+        />
+      </div>
       <div class="tag">Anya &amp; Loid</div>
+      <div class="love-note">I love you, Anya</div>
     </section>
 
     <section class="letter">
+      <div class="floating-hearts" aria-hidden="true">
+        <span class="floating-heart">♥</span>
+        <span class="floating-heart">♥</span>
+        <span class="floating-heart">♥</span>
+        <span class="floating-heart">♥</span>
+        <span class="floating-heart">♥</span>
+      </div>
       <div class="flowers" aria-hidden="true">
         <i class="flower"></i><i class="flower"></i><i class="flower"></i>
         <i class="flower"></i><i class="flower"></i>
       </div>
 
       <div class="eyebrow">A heartfelt farewell</div>
-      <h1>Dear Sister,</h1>
+      <h1>Dear Anya,</h1>
       <div class="divider"></div>
 
       <div class="message">
-        <p>I am truly sorry for the pain I have caused you. You are one of the most precious people in my life, and I wish I had understood sooner.</p>
-        <p>Goodbye does not mean I stop caring. Even when our paths separate, I will carry every memory of us, and I will always wish you happiness, peace, and a beautiful life.</p>
+        <p class="letter-line">Dear Ammi, you are the best person I have ever met.</p>
+        <p class="letter-line">You have been kind, strong, and precious to me.</p>
+        <p class="letter-line">I am truly sorry for every mistake I have made.</p>
+        <p class="letter-line">I am sorry for every hurtful word.</p>
+        <p class="letter-line">I am sorry for moments when I did not listen.</p>
+        <p class="letter-line">I am sorry for making you feel unheard or alone.</p>
+        <p class="letter-line">I never meant to hurt you.</p>
+        <p class="letter-line">My actions may not have shown how much I cared.</p>
+        <p class="letter-line">But you will always mean a great deal to me.</p>
+        <p class="letter-line">Your presence has brought warmth to my life.</p>
+        <p class="letter-line">Your smile and kindness will never be forgotten.</p>
+        <p class="letter-line">I have learned much from knowing you.</p>
+        <p class="letter-line">I hope life gives you all the happiness you deserve.</p>
+        <p class="letter-line">I hope you find peace in every new beginning.</p>
+        <p class="letter-line">I hope you stay strong and believe in yourself.</p>
+        <p class="letter-line">Please remember that you are deeply valued.</p>
+        <p class="letter-line">I wish our paths had led to better endings.</p>
+        <p class="letter-line">Amana Nasiya was my medicine, but from now on, I will live without her.</p>
+        <p class="letter-line">Still, I am grateful for every memory we share.</p>
+        <p class="letter-line">Goodbye, Ammi.</p>
+        <p class="letter-line">You will always have my love and respect.</p>
       </div>
 
       <div class="signoff">
@@ -283,30 +409,5 @@
     </section>
   </main>
 
-  <script>
-    async function loadCharacter(name, imageId) {
-      try {
-        const response = await fetch(
-          "https://api.jikan.moe/v4/characters?q=" + encodeURIComponent(name) + "&limit=1"
-        );
-        if (!response.ok) return;
-        const data = await response.json();
-        const image = data?.data?.[0]?.images?.jpg?.image_url;
-        if (image) document.getElementById(imageId).src = image;
-      } catch (_) {
-        // The fallback keeps the page complete if the character API is unavailable.
-      }
-    }
-
-    document.getElementById("anyaPortrait").addEventListener("error", function () {
-      this.style.display = "none";
-    });
-    document.getElementById("loidPortrait").addEventListener("error", function () {
-      this.style.display = "none";
-    });
-
-    loadCharacter("Anya Forger", "anyaPortrait");
-    loadCharacter("Loid Forger", "loidPortrait");
-  </script>
 </body>
 </html>
